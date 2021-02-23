@@ -202,4 +202,4 @@ def visualize_results(raw_dataframe, plate_onset, sample_onset,
     labels = labels_0 + labels_1
 
     ax.legend(data, labels, loc=0)
-    return
+    return ax
