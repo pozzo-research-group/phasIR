@@ -1,7 +1,7 @@
-import os
+# import os
 import unittest
 
-from phasIR import thermal_analysis as TA
+# from phasIR import thermal_analysis as TA
 
 
 class TestSimulationTools(unittest.TestCase):
