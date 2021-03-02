@@ -14,12 +14,12 @@ mock_coords = [[1, 13], [24, 25]]
 
 
 class TestSimulationTools(unittest.TestCase):
-    # def test_input_file(self):
-    #     '''Test for function which loads the input file'''
-    #     frames = IA.input_file(test_image)
-    #     assert isinstance(frames, np.ndarray), 'Output is not an array'
-    #
-    #     return
+    def test_input_file(self):
+        '''Test for function which loads the input file'''
+        frames = IA.input_file(test_image)
+        assert isinstance(frames, np.ndarray), 'Output is not an array'
+
+        return
 
     def test_flip_frame(self):
         frames = IA.input_file(image_file)
