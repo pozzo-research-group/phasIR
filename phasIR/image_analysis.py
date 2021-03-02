@@ -2,10 +2,14 @@ import os
 import numpy as np
 import pandas as pd
 import random
+import h5py
+
+import matplotlib.pyplot as plt
 
 from skimage import io, feature, filters
 from skimage.measure import label, regionprops
-from scipy.ndimage.morphology import binary_fill_holes, remove_small_objects
+from scipy.ndimage.morphology import binary_fill_holes
+from skimage.morphology import remove_small_objects
 
 
 # Function to load the input file
@@ -26,7 +30,19 @@ def input_file(file_name):
         In case of a video, returns an array for each frame
         in the video. In case of an image, return an array.
     '''
-    frames = io.imread(file_name)
+    file_type = file_name.split('.')[-1]
+    if file_type == 'HDF5':
+        file = h5py.File(file_name, 'r')
+        frames = []
+        for i in range(1, len(file.keys())+1):
+            frames.append(file['image'+str(i)])
+    # elif file_type == 'tiff':
+    elif file_type == 'png':
+        # read image- single frame
+        frames = io.imread(file_name, as_gray=True)
+    else:
+        # read video- collections of frames
+        frames = io.imread(file_name)
     return frames
 
 
@@ -83,7 +99,7 @@ def edge_detection(frame, n_samples, method='canny', sigma=1):
     broken = False
 
     # use canny edge detection method
-    if method is 'canny':
+    if method == 'canny':
         for size in range(15, 9, -1):
             image = frame - frame.min()
             image = image/image.max()
@@ -106,7 +122,7 @@ def edge_detection(frame, n_samples, method='canny', sigma=1):
             if len(samples) == n_samples:
                 break
 
-    elif method is 'sobel':
+    elif method == 'sobel':
         for size in range(15, 9, -1):
             # use sobel
             edges = filters.sobel(frame)
@@ -320,11 +336,12 @@ def manual_centroid(image):
     """
 
     # Set preferred matplolib visualization as pop out window
-    %matplotlib qt  # noqa: E999
+    print('Remember to run the following command: \033[1m % matplotlib qt' +
+          '\033[0m \nThis way you are enabling the pop-up option for images\n')
 
     prompt = 'Select the centroid of each well. Right click once' + \
-        'done. Middle mouse button removes most recent point.'
-    message = "Press keyboard button to save points and exit."
+        ' done. Middle mouse button removes most recent point.'
+    message = "\nPress keyboard button to save points and exit.\n"
     print(prompt)
 
     # generate image
@@ -335,33 +352,32 @@ def manual_centroid(image):
     # create empty lists to collect the centroid coordinates
     sample_col = []
     sample_row = []
-    while True:
-        plt.title(prompt, wrap=True)
-        fig.canvas.draw()
-        while True:
-            # This command allows the user to manually select any point on
-            # the image. n is set to a negative number, indicating that there
-            # is no limit for how many centroid to select. Selection is
-            # interrupted using the right click of the mouse.
-            points = plt.ginput(n=-1, show_clicks=True, timeout=-1,
-                                mouse_add=1, mouse_stop=3, mouse_pop=2)
-            break
-        plt.title(message, wrap=True)
-        fig.canvas.draw()
-        # print("Saved points = ", points)
-        print(message)
-        # Extract coordinates of centroids.
-        if plt.waitforbuttonpress():
-            for i in range(len(points)):
-                point_col = int(np.round(points[i][0]))
-                point_row = int(np.round(points[i][1]))
-                sample_col.append(point_col)
-                sample_row.append(point_row)
-            plt.close()
-            break
+    plt.title(prompt, wrap=True)
+    fig.canvas.draw()
+
+    # This command allows the user to manually select any point on
+    # the image. n is set to a negative number, indicating that there
+    # is no limit for how many centroid to select. Selection is
+    # interrupted using the right click of the mouse.
+    points = plt.ginput(n=-1, show_clicks=True, timeout=-1,
+                        mouse_add=1, mouse_stop=3, mouse_pop=2)
+
+    plt.title(message, wrap=True)
+    fig.canvas.draw()
+    # Extract coordinates of centroids.
+    if plt.waitforbuttonpress():
+        for i in range(len(points)):
+            point_col = int(np.round(points[i][0]))
+            point_row = int(np.round(points[i][1]))
+            sample_col.append(point_col)
+            sample_row.append(point_row)
+        plt.close()
 
     # Reset preferred matplolib visualization as inline
-    %matplotlib inline
+    print('\nNow run the following command: \033[1m % matplotlib inline' +
+          '\033[0m \nto reset the image visualization as inline in JN')
+
+    # %matplotlib inline
 
     # save the centroid location in a dataframes
     location_dict = {'Column': sample_col, 'Row': sample_row}

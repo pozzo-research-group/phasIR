@@ -10,12 +10,12 @@ dependencies:
   - ipython_genutils
   - ipywidgets
   - jupyter
-  - jupyter_client
-  - jupyter_console
-  - jupyter_core
-  - keras
-  - Keras-Applications==1.0.7
-  - Keras-Preprocessing==1.0.9
+#  - jupyter_client
+#  - jupyter_console
+#  - jupyter_core
+#  - keras
+#  - Keras-Applications==1.0.7
+#  - Keras-Preprocessing==1.0.9
   - matplotlib
   - nose
   - notebook
@@ -29,12 +29,12 @@ dependencies:
   - scikit-image
   - scikit-learn
   - sphinx
-  - sphinx-rtd-theme
+#   - sphinx-rtd-theme
   - tabulate
-  - tensorflow==2.0
-  - testpath
-  - terminaltables
-  - tk
-  - pip:
-    - plotly==4.8.1
-    - tensorflow==2.0
+#  - tensorflow==2.0
+#  - testpath
+#  - terminaltables
+#  - tk
+#  - pip:
+#    - plotly==4.8.1
+#    - tensorflow==2.0

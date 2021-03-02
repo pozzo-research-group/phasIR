@@ -109,4 +109,4 @@ venv.bak/
 
 #Data_Files
 .HDF5
-
+.ipynb

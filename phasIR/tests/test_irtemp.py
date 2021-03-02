@@ -1,7 +1,7 @@
 import os
 import unittest
 
-import irtemp  # Double check import is correct!!
+import irtemp
 
 
 # def test_name():

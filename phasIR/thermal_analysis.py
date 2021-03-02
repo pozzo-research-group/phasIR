@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 
-from irtemp import centikelvin_to_celsius
+from .irtemp import centikelvin_to_celsius
 from skimage.draw import circle
 from scipy.signal import find_peaks, peak_widths
 
