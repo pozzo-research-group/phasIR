@@ -1,8 +1,8 @@
-# import os
 import unittest
 
-from phasIR import image_analysis as IA
 import numpy as np
+
+from phasIR import image_analysis as IA
 from unittest.mock import patch
 
 image_file = './phasIR/data/images/24_conical_empty_plate.png'
@@ -16,7 +16,7 @@ mock_coords = [[1, 13], [24, 25]]
 class TestSimulationTools(unittest.TestCase):
     def test_input_file(self):
         '''Test for function which loads the input file'''
-        frames = IA.input_file(test_image)
+        frames = IA.input_file(image_file)
         assert isinstance(frames, np.ndarray), 'Output is not an array'
 
         return

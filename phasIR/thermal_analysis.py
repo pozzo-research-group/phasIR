@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 
 
-from .irtemp import centikelvin_to_celsius
-from skimage.draw import circle
+from phasIR.irtemp import centikelvin_to_celsius
+from skimage.draw import disk
 from scipy.signal import find_peaks, peak_widths
 
 
@@ -24,7 +24,7 @@ def pixel_intensity(sample_location, plate_location, frames, r=2):
     frames : Array
         An array of arrays containing the frames of the IR video.
     r: Int
-       Integer value to use for the radius of the circle applied to each
+       Integer value to use for the radius of the disk applied to each
        sample location. The final sample temperature is obtained as an average
        value.
 
@@ -51,7 +51,7 @@ def pixel_intensity(sample_location, plate_location, frames, r=2):
         temp_well = []
         plate_well_temp = []
         for frame in frames:
-            rr, cc = circle(row[i], col[i], radius=r)
+            rr, cc = disk((row[i], col[i]), radius=r)
             sample_intensity = np.mean(frame[rr, cc])
             plate_intensity = np.mean(
                 frame[p_row[i*4:(i*4)+4], p_col[i*4:(i*4)+4]])

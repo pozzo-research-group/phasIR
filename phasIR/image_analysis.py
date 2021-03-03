@@ -1,10 +1,10 @@
-# import os
-import numpy as np
-import pandas as pd
 import random
 import h5py
 
+import ipywidgets as widgets
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 from skimage import io, feature, filters
 from skimage.measure import label, regionprops
@@ -56,8 +56,8 @@ def flip_frame(frames):
     Parameters
     -----------
     frames : Array
-        An array containing an array for each frame
-        in the video or just a single array in case of an image.
+        An array containing frame (arrays) from the IR video or just a
+        single array in case of an image.
 
     Returns
     --------
@@ -79,8 +79,7 @@ def edge_detection(frame, n_samples, method='canny', sigma=1):
     Parameters
     -----------
     frames : Array
-        The frames to be processed and determine the
-        sample temperature from.
+        The frames to be processed and determine the wells position from
     n_samples : Int
         The number of samples in the input video.
     method : String
@@ -320,21 +319,19 @@ def manual_centroid(image):
     sorted following the same order they were inputted.
     Note: suggested order-> top-bottom, left-right
 
-
     Parameters
     ----------
     image: np.ndarray
-        Array representing an image. Thsi image will be use to manually
-        select the centroid position of each well.
+        2-Dimensional array representing an image.
+        This image will be use to manually select the centroid position
+        of each well.
 
     Returns
     -------
     sample_location: pd.DataFrame
         Dataframe containing the coordinates of each centroid identified on
         the plate.
-
     """
-
     # Set preferred matplolib visualization as pop out window
     print('Remember to run the following command: \033[1m % matplotlib qt' +
           '\033[0m \nThis way you are enabling the pop-up option for images\n')
@@ -384,3 +381,113 @@ def manual_centroid(image):
     sample_location = pd.DataFrame(location_dict)
 
     return sample_location
+
+
+def manual_crop(image_to_crop):
+    '''
+    This function makes use of ipywidget to manually select the plate edges
+    on the iamge, to allow for the automatic determination of the centroid
+    coordinates of the wells on the plate. See edge_detection function for
+    more detailes.
+
+    Paramters
+    ---------
+    image_to_crop : np.array
+        Two dimensional array representing an image. Ideally this should be an
+        empty plate image to use for the determiantion of the coordinates of
+        the plate and the samples(wells)
+
+    Returns
+    -------
+    crop_image: function
+    height_slider: ipywidget.IntRangeSlider()
+        Slider to use for selecting the new height of the image
+    width_slider: ipywidget.IntRangeSlider()
+        Slider to use for selecting the new width of the image
+    '''
+    # define the function to display the image to use in the ipywidget
+    def crop_image(width, height):
+        '''
+        Simple function which displays the image passed in the parent function
+
+        Parameters
+        ----------
+        width: ipywidget.IntRangeSlider()
+        height: ipywidget.IntRangeSlider()
+
+        Returns
+        -------
+        matplotlib.pyplot.imshow() instance
+
+        '''
+        plt.imshow(image_to_crop[height[0]:height[1],
+                                 width[0]:width[1]])
+        plt.show()
+
+        print(width)
+        print(height)
+        return
+
+    # define the widget objects to interact with the image
+    # the ranges of the sliders are the dimentions of the image
+    height_slider = widgets.IntRangeSlider(
+        value=[0, image_to_crop.shape[0]],
+        min=0,
+        max=image_to_crop.shape[0],
+        step=1,
+        description='Height:',
+        disabled=False,
+        continuous_update=True,
+        orientation='horizontal',
+        readout=True,
+        readout_format='d')
+    width_slider = widgets.IntRangeSlider(
+        value=[0, image_to_crop.shape[1]],
+        min=0,
+        max=image_to_crop.shape[1],
+        step=1,
+        description='Width:',
+        disabled=False,
+        continuous_update=True,
+        orientation='horizontal',
+        readout=True,
+        readout_format='d')
+
+    return crop_image, height_slider, width_slider
+
+
+def crop_frames(widget, frames, flip=True):
+    '''
+    Funciton to resize and crop all frames of the IR video given the
+    interactive ipywidget session.
+    All frames will be resized and a new list will be generated. Option
+    to flip the frame to remove thw mirror imaging effect of the camera.
+    See image_analysis.flip_frames for more detailes.
+
+    Parameters
+    ----------
+    widget: ipywidget.interactive()
+        Instance of the interactive ipywidget session.
+    frames : Array
+        An array containing frame (arrays) from the IR video or just a
+        single array in case of an image.
+
+    Returns
+    -------
+    cropped_frames: list
+        list of frames cropped givent the image dimensions obtained from the
+        interactive ipywidget session
+    '''
+    width_min = widget.children[0].value[0]
+    width_max = widget.children[0].value[1]
+    height_min = widget.children[1].value[0]
+    height_max = widget.children[1].value[1]
+    cropped_frames = []
+    for frame in frames:
+        cropped_frames.append(
+            frame[height_min:height_max,
+                  width_min:width_max])
+    if flip:
+        return ia.flip_frame(cropped_frames)
+    else:
+        return cropped_frames

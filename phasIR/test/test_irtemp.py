@@ -1,15 +1,8 @@
-# import os
 import unittest
 
-from phasIR import irtemp  # Double check import is correct!!
+from phasIR import irtemp
 
 
-# def test_name():
-#     '''Doc String'''
-#     #inputs
-#     #running function
-#     #asserts
-#     return
 class TestSimulationTools(unittest.TestCase):
     def test_centikelvin_to_celcius(self):
         '''
