@@ -5,6 +5,7 @@ import pandas as pd
 
 
 from phasIR.irtemp import centikelvin_to_celsius
+# from irtemp import centikelvin_to_celsius
 from skimage.draw import disk
 from scipy.signal import find_peaks, peak_widths
 
@@ -62,77 +63,138 @@ def pixel_intensity(sample_location, plate_location, frames, r=2):
     return sample_temp, plate_temp
 
 
-def find_temp_peak(baseline_array, height=2):
-    '''
+def baseline_subtraction(plate_temperature, sample_temperature, n=None):
+    """
+    Function to store the data in a pandas DataFrame and perform the baseline
+    subtraction. In this case, the baseline is defined as the plate temperature
+    as it is the reference material for the system.
 
     Parameters
     ----------
+    plate_temperature: list
+        List containing the plate temperature at every frame of the IR video
+    sample_temperature: list
+        List containing the sample temperature at every frame of the IR video
+    n: int
+        number of point to use for smoothing of the data. The smoothing is
+        performed using a rolling average over n points. Default is 5% of
+        the data
 
     Returns
     -------
+    temperature_dataframe : pd.DataFrame
+        Datafrane containing the temperature data for plate, sample, baseline
+        and smoothed data
+    """
+    temperature_dataframe = pd.DataFrame(
+        {'Frames': np.linspace(1, len(plate_temperature),
+         len(plate_temperature)), 'Plate_temp': plate_temperature,
+         'Sample_temp':  sample_temperature})
+    if n:
+        n = n
+    else:
+        n = int(0.05*len(temperature_dataframe['Plate_temp']))
+    temperature_dataframe['Plate_avg'] = \
+        temperature_dataframe.iloc[:, 1].rolling(window=n).mean()
+    temperature_dataframe['Sample_avg'] = \
+        temperature_dataframe.iloc[:, 2].rolling(window=n).mean()
+    temperature_dataframe['Delta_T'] = \
+        temperature_dataframe['Plate_avg']-temperature_dataframe['Sample_avg']
 
+    return temperature_dataframe
+
+
+def find_temp_peak(baseline_array, height=2, prominence=1):
     '''
-    peaks, properties = find_peaks(baseline_array, height=height)
-    peak_heights = properties['peak_heights']
-    peak_max = [i for i in range(len(peak_heights))
-                if peak_heights[i] == max(peak_heights)]
-    peaks_w = peak_widths(baseline_array, peaks[peak_max])
+    Funciton to evaluate the Delta Temperature curve obtained from the
+    subtraction of the baseline. The peak(s) of the curve are determined,
+    as well as their width to extract their onset.
 
-    peak_left_onset = int(round(peaks_w[2][0]))
+    Parameters
+    ----------
+    baseline_array: pd.Series
+        Delta Temperature curve obtained from the subtraction of the baseline
+    heigth: int
+        Minimum height of the peaks in the delta temperature curve
+    prominence: int
+        minimum prominence of the peaks in the delta temperature curve
 
-    return peak_left_onset, peaks[peak_max]
+    Returns
+    -------
+    peak_left_onset: list
+        List containing the index of the left-side onset of the peak(s)
+    peak_max: list
+        List containing the index of the peak(s)
+    '''
+    peaks, properties = find_peaks(baseline_array, height=height,
+                                   prominence=prominence)
+    peak_left_onset = []
+    peak_max = []
+    for i in range(len(peaks)):
+        peaks_w = peak_widths(baseline_array, [peaks[i]])
+        peak_left_onset.append(int(round(peaks_w[2][0])))
+        peak_max.append(peaks[i])
+    return peak_left_onset, peak_max
 
 
 def get_temperature(dataframe, peak_onset_index, peak_max_index, sample=True):
     """
+    Function to extract the sample and plate temparature given the indices
+    of the peak and its onset of the delta temperature curve
+
     Parameters
     ----------
+    dataframe: pd.Dataframe
+        Temperature dataframe containing the raw and delta temprature data
+    peak_onset_index:
+        List of indices of the left-hand onset of the peak(s)
+    peak_max_index:
+        List fo indices of the peak(s)
+    sample: Boolean
+        If True, temperature will be extracted using the sample temperature
+        data, otherwise the plate data will be used
 
     Returns
     -------
+    onset_temp:list
+        List containing the temperature at the onset of the peak(s)
+    peak_temp:list
+        List containing the temperature at the peak(s)
     """
     if sample:
-        onset_temp = dataframe['Sample_avg'].loc[peak_onset_index]
-        peak_temp = dataframe['Sample_avg'].loc[peak_max_index[0]]
+        onset_temp = dataframe['Sample_avg'].iloc[peak_onset_index].values
+        peak_temp = dataframe['Sample_avg'].iloc[peak_max_index].values
     else:
-        onset_temp = dataframe['Plate_avg'].loc[peak_onset_index]
-        peak_temp = dataframe['Plate_avg'].loc[peak_max_index[0]]
+        onset_temp = dataframe['Plate_avg'].iloc[peak_onset_index].values
+        peak_temp = dataframe['Plate_avg'].iloc[peak_max_index].values
 
     return onset_temp, peak_temp
-
-
-def baseline_subtraction(plate_temperature, sample_temperature, n=None):
-    """
-    Parameters
-    ----------
-
-    Returns
-    -------
-    """
-    dataframe = pd.DataFrame({'Frames': np.linspace(1, len(plate_temperature),
-                                                    len(plate_temperature)),
-                              'Plate_temp': plate_temperature,
-                              'Sample_temp':  sample_temperature})
-    if n:
-        n = n
-    else:
-        n = int(0.05*len(dataframe['Plate_temp']))
-    dataframe['Plate_avg'] = dataframe.iloc[:, 1].rolling(window=n).mean()
-    dataframe['Sample_avg'] = dataframe.iloc[:, 2].rolling(window=n).mean()
-    dataframe['Delta_T'] = dataframe['Plate_avg']-dataframe['Sample_avg']
-
-    return dataframe
 
 
 def phase_transition_temperature(plate_temperatures, sample_temperatures,
                                  plot=False):
     """
+    Wrapping function to extract the phase transition temperature given the
+    list of plate and sample temperatures of each well on the plate.
+    The data will be converted into a dataframe. The delta temperature curve
+    will be extracted and evaluated for peaks. Finally, the data can be plotted
+    for visual inspection of results. The output of the function is a dataframe
+    containing only the phase transition temperature -onset and peak
+
     Parameters
     ----------
+    plate_temperature: list
+        List containing the plate temperature at every frame of the IR video
+    sample_temperature: list
+        List containing the sample temperature at every frame of the IR video
+    plot: boolean
+        if True, a plot of the temprature profiles for each well identified
+        on the plate will be displayed.
 
     Returns
     -------
-
+    phase_transition_df: pd.DataFrame
+        dataframe containing only the phase transition temperature(s)
     """
     assert len(plate_temperatures) == len(sample_temperatures),\
         'The temperature arrays provided are not the same length.'
@@ -143,6 +205,7 @@ def phase_transition_temperature(plate_temperatures, sample_temperatures,
     stemp_peak = []
     ptemp_onset = []
     ptemp_peak = []
+
     for i in range(n):
         dataframe = baseline_subtraction(
             plate_temperatures[i], sample_temperatures[i])
@@ -151,32 +214,54 @@ def phase_transition_temperature(plate_temperatures, sample_temperatures,
             dataframe, peak_onset, peak_max, sample=True)
         p_temp_onset, p_temp_peak = get_temperature(
             dataframe, peak_onset, peak_max, sample=False)
-        stemp_onset.append(np.round(s_temp_onset, 2))
-        stemp_peak.append(np.round(s_temp_peak, 2))
-        ptemp_onset.append(np.round(p_temp_onset, 2))
-        ptemp_peak.append(np.round(p_temp_peak, 2))
+
+        if len(s_temp_onset) == 0:
+            stemp_onset.append('-')
+            ptemp_onset.append('-')
+            stemp_peak.append('-')
+            ptemp_peak.append('-')
+        else:
+            stemp_onset.append(np.round(s_temp_onset, 2))
+            ptemp_onset.append(np.round(p_temp_onset, 2))
+            stemp_peak.append(np.round(s_temp_peak, 2))
+            ptemp_peak.append(np.round(p_temp_peak, 2))
+
         if plot:
             visualize_results(
                 dataframe, p_temp_onset, s_temp_onset,
                 p_temp_peak, s_temp_peak)
 
-    temperatures_dataframe = pd.DataFrame({'Sample_temp_onset': stemp_onset,
-                                           'Sample_temp_peak': stemp_peak,
-                                           'Plate_temp_onset': ptemp_onset,
-                                           'Plate_temp_peak': ptemp_peak})
+    phase_transition_df = pd.DataFrame({'Sample_temp_onset': stemp_onset,
+                                        'Sample_temp_peak': stemp_peak,
+                                        'Plate_temp_onset': ptemp_onset,
+                                        'Plate_temp_peak': ptemp_peak})
 
-    return temperatures_dataframe
+    return phase_transition_df
 
 
 def visualize_results(raw_dataframe, plate_onset, sample_onset,
                       plate_peak, sample_peak):
     """
+    Function to visualize the temperature profiles, delta temperature curve and
+    phase transition temperature(s)
 
     Parameters
     ----------
+    raw_dataframe: pd.DataFrame
+        Temperature dataframe containing the raw and delta temprature data
+    plate_onset: list
+        List of the phase transition onset plate temperature(s)
+    sample_onset: list
+        List of the phase transition onset sample temperature(s)
+    plate_peak: list
+        List of the phase transition peak plate temperature(s)
+    sample_peak: list
+        List of the phase transition peak sample temperature(s)
 
     Returns
     -------
+    ax: matplotlib axis
+        Matplotlib axis object
     """
     # generate figure and axis object
     fig, ax = plt.subplots()
