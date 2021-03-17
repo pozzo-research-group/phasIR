@@ -5,7 +5,7 @@ import ipywidgets as widgets
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import phasIR.image_analysis as IA
+
 
 from skimage import io, feature, filters
 from skimage.measure import label, regionprops
@@ -156,11 +156,11 @@ def sample_locations(samples, n_samples, dtype='float'):
 
     Paramters
     ---------
-    samples: skimage.measure._regionprops.RegionProperties
+    samples : skimage.measure._regionprops.RegionProperties
         skimage object containing the properties of each well found
         using the edge detection function. The centroid of the well
         is an attribute of this object.
-    n_samples: int
+    n_samples : int
         Integer number representing the number of samples in a plate.
         This number shuold match the number fo wells
 
@@ -241,19 +241,19 @@ def diagonal_points(x_coord, y_coord, radius):
 
     Paramters
     ---------
-    x_coord: float or int
+    x_coord : float or int
         X-coordinates of center point
-    y_coord: float or int
+    y_coord : float or int
         Y-coordinates of center point
-    radius: int or float
+    radius : int or float
         Distance to add and subtract to the both coordinates of the center
         point to obtain the four diagonal points
 
     Returns
     -------
-    x_coords: list
+    x_coords : list
         List containing the X-coordinates of the diagonal points
-    y_coords: list
+    y_coords : list
         List containing the Y-coordinates of the diagonal points
     """
 
@@ -273,11 +273,11 @@ def plate_location(sample_location, n_columns, n_rows):
 
     Parameters
     ----------
-    sample_location: pd.DataFrame
+    sample_location : pd.DataFrame
         Dataframe containing the coordinates of the each sample on the plate
-    n_columns: int
+    n_columns : int
         Number representing the columns of wells composng the wellplate
-    n_row: int
+    n_row : int
         Number representing the rows of wells composng the wellplate
 
     Returns
@@ -322,14 +322,14 @@ def manual_centroid(image):
 
     Parameters
     ----------
-    image: np.ndarray
+    image : np.ndarray
         2-Dimensional array representing an image.
         This image will be use to manually select the centroid position
         of each well.
 
     Returns
     -------
-    sample_location: pd.DataFrame
+    sample_location : pd.DataFrame
         Dataframe containing the coordinates of each centroid identified on
         the plate.
     """
@@ -400,10 +400,10 @@ def manual_crop(image_to_crop):
 
     Returns
     -------
-    crop_image: function
-    height_slider: ipywidget.IntRangeSlider()
+    crop_image : function
+    height_slider : ipywidget.IntRangeSlider()
         Slider to use for selecting the new height of the image
-    width_slider: ipywidget.IntRangeSlider()
+    width_slider : ipywidget.IntRangeSlider()
         Slider to use for selecting the new width of the image
     '''
     # define the function to display the image to use in the ipywidget
@@ -413,8 +413,8 @@ def manual_crop(image_to_crop):
 
         Parameters
         ----------
-        width: ipywidget.IntRangeSlider()
-        height: ipywidget.IntRangeSlider()
+        width : ipywidget.IntRangeSlider()
+        height : ipywidget.IntRangeSlider()
 
         Returns
         -------
@@ -467,7 +467,7 @@ def crop_frames(widget, frames, flip=True):
 
     Parameters
     ----------
-    widget: ipywidget.interactive()
+    widget : ipywidget.interactive()
         Instance of the interactive ipywidget session.
     frames : Array
         An array containing frame (arrays) from the IR video or just a
@@ -475,7 +475,7 @@ def crop_frames(widget, frames, flip=True):
 
     Returns
     -------
-    cropped_frames: list
+    cropped_frames : list
         list of frames cropped givent the image dimensions obtained from the
         interactive ipywidget session
     '''
@@ -489,6 +489,6 @@ def crop_frames(widget, frames, flip=True):
             frame[height_min:height_max,
                   width_min:width_max])
     if flip:
-        return IA.flip_frame(cropped_frames)
+        return flip_frame(cropped_frames)
     else:
         return cropped_frames

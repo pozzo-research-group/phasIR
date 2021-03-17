@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 
 
-from phasIR.irtemp import centikelvin_to_celsius
-# from irtemp import centikelvin_to_celsius
+# from phasIR.irtemp import centikelvin_to_celsius
+from irtemp import centikelvin_to_celsius
 from skimage.draw import disk
 from scipy.signal import find_peaks, peak_widths
 
@@ -24,7 +24,7 @@ def pixel_intensity(sample_location, plate_location, frames, r=2):
         sample.
     frames : Array
         An array of arrays containing the frames of the IR video.
-    r: Int
+    r : Int
        Integer value to use for the radius of the disk applied to each
        sample location. The final sample temperature is obtained as an average
        value.
@@ -71,11 +71,11 @@ def baseline_subtraction(plate_temperature, sample_temperature, n=None):
 
     Parameters
     ----------
-    plate_temperature: list
+    plate_temperature : list
         List containing the plate temperature at every frame of the IR video
-    sample_temperature: list
+    sample_temperature : list
         List containing the sample temperature at every frame of the IR video
-    n: int
+    n : int
         number of point to use for smoothing of the data. The smoothing is
         performed using a rolling average over n points. Default is 5% of
         the data
@@ -112,18 +112,18 @@ def find_temp_peak(baseline_array, height=2, prominence=1):
 
     Parameters
     ----------
-    baseline_array: pd.Series
+    baseline_array : pd.Series
         Delta Temperature curve obtained from the subtraction of the baseline
-    heigth: int
+    heigth : int
         Minimum height of the peaks in the delta temperature curve
-    prominence: int
+    prominence : int
         minimum prominence of the peaks in the delta temperature curve
 
     Returns
     -------
-    peak_left_onset: list
+    peak_left_onset : list
         List containing the index of the left-side onset of the peak(s)
-    peak_max: list
+    peak_max : list
         List containing the index of the peak(s)
     '''
     peaks, properties = find_peaks(baseline_array, height=height,
@@ -144,21 +144,21 @@ def get_temperature(dataframe, peak_onset_index, peak_max_index, sample=True):
 
     Parameters
     ----------
-    dataframe: pd.Dataframe
+    dataframe : pd.Dataframe
         Temperature dataframe containing the raw and delta temprature data
-    peak_onset_index:
+    peak_onset_index : list
         List of indices of the left-hand onset of the peak(s)
-    peak_max_index:
+    peak_max_index : list
         List fo indices of the peak(s)
-    sample: Boolean
+    sample : Boolean
         If True, temperature will be extracted using the sample temperature
         data, otherwise the plate data will be used
 
     Returns
     -------
-    onset_temp:list
+    onset_temp : list
         List containing the temperature at the onset of the peak(s)
-    peak_temp:list
+    peak_temp : list
         List containing the temperature at the peak(s)
     """
     if sample:
@@ -247,20 +247,20 @@ def visualize_results(raw_dataframe, plate_onset, sample_onset,
 
     Parameters
     ----------
-    raw_dataframe: pd.DataFrame
+    raw_dataframe : pd.DataFrame
         Temperature dataframe containing the raw and delta temprature data
-    plate_onset: list
+    plate_onset : list
         List of the phase transition onset plate temperature(s)
-    sample_onset: list
+    sample_onset : list
         List of the phase transition onset sample temperature(s)
-    plate_peak: list
+    plate_peak : list
         List of the phase transition peak plate temperature(s)
-    sample_peak: list
+    sample_peak : list
         List of the phase transition peak sample temperature(s)
 
     Returns
     -------
-    ax: matplotlib axis
+    ax : matplotlib axis
         Matplotlib axis object
     """
     # generate figure and axis object
