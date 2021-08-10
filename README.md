@@ -76,7 +76,7 @@ Alternatively, you can also install it using the GitHub repository as follows:
 * This is an alternative technique for low contrast images(video frames). In some situations, the automatic centroid detection cannot correctly determine all the wells. This can also be used if a different plate configuration is used.
 * Alternatively, the centroid location for each sample can be manually selected on the pop-out figure
 
-<img src="./doc/images/centroid_manual_selection_example.PNG" align='center'  height=300 width=500>
+<img src="./doc/images/centroid_manual_selection_example.PNG" align='center'  height=300 width=400>
 
 
 
