@@ -19,7 +19,7 @@ To ensure a constant sample position in the well across the entire temperature t
 The overall design of the PhasIR hardware system takes inspiration from Differential Thermal Analysis (DTA) techniques that operated on a single sample at a time. A black anodized aluminum plate is used as the reference point for the plate temperature, while the sample temperature is obtained at the center-point of the conical wells. All of this is collected simultaneously using the IR camera that captures the full view of the plate.
 
 
-<img src="./doc/images/PhasIR_Workflow_2.png" align='center' title="General Workflow for PhasIR System" >
+<img src="./doc/images/PhasIR_Workflow.png" align='center' title="General Workflow for PhasIR System" >
 
 
 ## Application
@@ -76,11 +76,11 @@ Alternatively, you can also install it using the GitHub repository as follows:
 * This is an alternative technique for low contrast images(video frames). In some situations, the automatic centroid detection cannot correctly determine all the wells. This can also be used if a different plate configuration is used.
 * Alternatively, the centroid location for each sample can be manually selected on the pop-out figure
 
-<img src="./doc/images/centroid_manual_selection_example.png" align='center'  height=300 width=500>
+<img src="./doc/images/centroid_manual_selection_example.PNG" align='center'  height=300 width=500>
 
 
 
-<img src="./doc/images/PhasIR_Xylitol_sample_graph.png" align='right' >
+<img src="./doc/images/PhasIR_Xylitol_sample_graph.PNG" align='right' >
 
 ### Thermal Analysis
 
