@@ -1,8 +1,7 @@
-<style>body {text-align: justify}</style>
-
+ 
 <img src="./doc/images/PhasIR_Schematics.png" width="400" height="600" align='right' title="Generat PhasIR Schematics. The system is composed by a Raspberry Pi Interface, a Lepton FLIR 3.5 IR Camera and a Echotherm IC25 Chilling/Heating plate">
 
-# PhasIR
+# phasIR
 
 
 Python modules for high-throughput thermal analysis for fast and accurate estimation of phase transition temperatures for up to 96-samples analyzed simultaneously in under 15 minutes. The package includes the data analysis software, as well as build files to reproduce the PhasIR hardware infrastructure.
@@ -76,7 +75,7 @@ Alternatively, you can also install it using the GitHub repository as follows:
 * This is an alternative technique for low contrast images(video frames). In some situations, the automatic centroid detection cannot correctly determine all the wells. This can also be used if a different plate configuration is used.
 * Alternatively, the centroid location for each sample can be manually selected on the pop-out figure
 
-<img src="./doc/images/centroid_manual_selection_example.PNG" align='center'  height=300 width=400>
+<img src="./doc/images/centroid_manual_selection_example.PNG" align='center'  height=400 width=500>
 
 
 
