@@ -9,7 +9,7 @@ import setuptools
 
 setuptools.setup(
     name='phasIR',
-    version='1.0'
+    version='1.0',
     url='https://github.com/pozzo-research-group/phasIR.git',
     license='MIT',
     author='Maria Politi, Jaime Rodriguez,' + \
