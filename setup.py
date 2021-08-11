@@ -9,12 +9,11 @@ import setuptools
 
 setuptools.setup(
     name='phasIR',
-    version='0.1'
-    url='',
-    # url='https://github.com/pozzo-research-group/phasIR.git',
+    version='1.0',
+    url='https://github.com/pozzo-research-group/phasIR.git',
     license='MIT',
-    author='Shrilakshmi Bonageri, Jaime Rodriguez,' + \
-        'Sage Scheiwiller, Maria Politi',
+    author='Maria Politi, Jaime Rodriguez,' + \
+        'Sage Scheiwiller, Shrilakshmi Bonageri',
     description='A package for high-throughput measurement of ' + \
         'melting temperature using IR bolometry',
     description_content_type='text/markdown; charset=UTF-8; variant=GFM',
@@ -30,11 +29,6 @@ setuptools.setup(
                       'scikit-learn',
                       'scipy',
                       'matplotlib',
-                      'h5py',
-                      'Keras',
-                      'tensorflow',
-                      'tensorflow-estimator',
-                      'Keras-Applications',
-                      'Keras-Preprocessing'],
+                      'h5py'],
     zip_safe=False,
 )
