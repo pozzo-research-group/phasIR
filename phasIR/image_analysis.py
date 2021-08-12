@@ -5,7 +5,6 @@ import ipywidgets as widgets
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import phasIR.image_analysis as IA
 
 from skimage import io, feature, filters
 from skimage.measure import label, regionprops
@@ -489,6 +488,6 @@ def crop_frames(widget, frames, flip=True):
             frame[height_min:height_max,
                   width_min:width_max])
     if flip:
-        return IA.flip_frame(cropped_frames)
+        return flip_frame(cropped_frames)
     else:
         return cropped_frames
