@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-
 from skimage import io, feature, filters
 from skimage.measure import label, regionprops
 from scipy.ndimage.morphology import binary_fill_holes

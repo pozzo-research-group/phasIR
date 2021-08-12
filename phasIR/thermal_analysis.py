@@ -4,8 +4,7 @@ import numpy as np
 import pandas as pd
 
 
-# from phasIR.irtemp import centikelvin_to_celsius
-from irtemp import centikelvin_to_celsius
+from phasIR.irtemp import centikelvin_to_celsius
 from skimage.draw import disk
 from scipy.signal import find_peaks, peak_widths
 
@@ -104,7 +103,7 @@ def baseline_subtraction(plate_temperature, sample_temperature, n=None):
     return temperature_dataframe
 
 
-def find_temp_peak(baseline_array, height=2, prominence=1):
+def find_temp_peak(baseline_array, height=2, prominence=1, **kwargs):
     '''
     Funciton to evaluate the Delta Temperature curve obtained from the
     subtraction of the baseline. The peak(s) of the curve are determined,
@@ -127,7 +126,7 @@ def find_temp_peak(baseline_array, height=2, prominence=1):
         List containing the index of the peak(s)
     '''
     peaks, properties = find_peaks(baseline_array, height=height,
-                                   prominence=prominence)
+                                   prominence=prominence, **kwargs)
     peak_left_onset = []
     peak_max = []
     for i in range(len(peaks)):
@@ -172,7 +171,7 @@ def get_temperature(dataframe, peak_onset_index, peak_max_index, sample=True):
 
 
 def phase_transition_temperature(plate_temperatures, sample_temperatures,
-                                 plot=False):
+                                 plot=False, **kwargs):
     """
     Wrapping function to extract the phase transition temperature given the
     list of plate and sample temperatures of each well on the plate.
@@ -209,7 +208,7 @@ def phase_transition_temperature(plate_temperatures, sample_temperatures,
     for i in range(n):
         dataframe = baseline_subtraction(
             plate_temperatures[i], sample_temperatures[i])
-        peak_onset, peak_max = find_temp_peak(dataframe['Delta_T'])
+        peak_onset, peak_max = find_temp_peak(dataframe['Delta_T'], **kwargs)
         s_temp_onset, s_temp_peak = get_temperature(
             dataframe, peak_onset, peak_max, sample=True)
         p_temp_onset, p_temp_peak = get_temperature(

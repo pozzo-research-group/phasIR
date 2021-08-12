@@ -20,7 +20,7 @@ dependencies:
   - python
   - scipy
   - setuptools
-  - scikit-image
+  - scikit-image==0.18
   - scikit-learn
   - sphinx
   - tabulate
