@@ -5,7 +5,7 @@ import numpy as np
 from phasIR import image_analysis as IA
 from unittest.mock import patch
 
-image_file = './phasIR/data/images/24_conical_empty_plate.png'
+image_file = './doc/data/empty_plates_images/24_conical_empty_plate.png'
 test_image = IA.input_file(image_file)
 samples = IA.edge_detection(test_image[12:105, 17:148], 24)
 sample_location = IA.sample_locations(samples, 24)

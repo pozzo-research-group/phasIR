@@ -5,6 +5,7 @@ import string
 import numpy as np
 import pandas as pd
 
+
 def load_csv(path, file):
     '''
     Function to load a csv file. The results from the thermal analysis can
@@ -23,7 +24,7 @@ def load_csv(path, file):
         Dataframe containing the data saved in the file.
 
     '''
-    if file.endswth('.csv'):
+    if file.endswith('.csv'):
         dataframe = pd.read_csv(path+file, index_col='Unnamed: 0')
     else:
         dataframe = pd.read_csv(path+file+'.csv', index_col='Unnamed: 0')
