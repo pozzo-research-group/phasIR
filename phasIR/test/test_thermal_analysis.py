@@ -64,7 +64,7 @@ class TestSimulationTools(unittest.TestCase):
             assert isinstance(onset_temp[0], int), \
                 'the onset tempeature is not correctly identified'
         if len(peak_temp) != 0:
-            assert isinstance(peak_tempt[0], int), \
+            assert isinstance(peak_temp[0], int), \
                 'the peak temperature is not correclty identified'
         return
 
