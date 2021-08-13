@@ -110,3 +110,9 @@ venv.bak/
 #Data_Files
 .HDF5
 .ipynb
+
+
+# Build_Files
+meta.yml
+build.sh
+bld.bat
