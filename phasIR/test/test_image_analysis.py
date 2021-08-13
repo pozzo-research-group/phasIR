@@ -6,6 +6,7 @@ from phasIR import image_analysis as IA
 from unittest.mock import patch
 
 image_file = './doc/data/empty_plates_images/24_conical_empty_plate.png'
+video_file = './phasIR/test/data/empty_plate_well_position.HDF5'
 test_image = IA.input_file(image_file)
 samples = IA.edge_detection(test_image[12:105, 17:148], 24)
 sample_location = IA.sample_locations(samples, 24)
@@ -19,11 +20,14 @@ class TestSimulationTools(unittest.TestCase):
         frames = IA.input_file(image_file)
         assert isinstance(frames, np.ndarray), 'Output is not an array'
 
+        frames = IA.input_file(video_file)
+        assert isinstance(frames, list), 'Output is not an array'
         return
 
     def test_flip_frame(self):
-        frames = IA.input_file(image_file)
-        assert isinstance(frames, np.ndarray), 'Output is not an array'
+        frames = IA.input_file(video_file)
+        flipped_frames = IA.flip_frame(frames)
+        assert isinstance(flipped_frames, list), 'Output is not an array'
         return
 
     def test_edge_detection(self):

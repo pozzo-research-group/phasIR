@@ -18,7 +18,7 @@ class TestSimulationTools(unittest.TestCase):
         # Chack that if file extention is not given, it will still load
         # correctly
         test_path = './phasIR/test/data/'
-        test_file_2 = 'Test_data.csv'
+        test_file_2 = 'Test_data'
         df_2 = dm.load_csv(test_path, test_file_2)
 
         assert isinstance(df_2, pd.DataFrame), \
@@ -57,6 +57,12 @@ class TestSimulationTools(unittest.TestCase):
     def read_results(self):
         test_path = './phasIR/test/data/'
         test_file = 'test_file.h5'
+        result_dict = dm.read_results(test_path, test_file)
+        assert isinstance(result_dict, dict), \
+            'the file was not correctly loaded'
+
+        test_path = './phasIR/test/data/'
+        test_file = 'test_file'
         result_dict = dm.read_results(test_path, test_file)
         assert isinstance(result_dict, dict), \
             'the file was not correctly loaded'
