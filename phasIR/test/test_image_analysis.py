@@ -93,3 +93,12 @@ class TestSimulationTools(unittest.TestCase):
             'the selected points are not the right ones'
 
         return
+
+    @patch('ipywidgets.widgets.widget_int.IntRangeSlider',
+           return_value=[(12, 105), (17, 148)])
+    def test_crop_frames(self, patched_input1):
+        frames = IA.input_file(video_file)
+        IA.crop_frames(patched_input1, frames)
+        assert patched_input1.called_with(12, 105, 17, 148)
+        # assert cropped_frames[0].shape[0] == 12,\
+        #     'the image was not correctly cropped'

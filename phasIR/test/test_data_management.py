@@ -59,7 +59,6 @@ class TestSimulationTools(unittest.TestCase):
     def test_read_results(self):
         test_path = './phasIR/test/data/'
         test_file = 'file_to_read.h5'
-        files = os.listdir(test_path)
         result_dict = dm.read_results(test_path, test_file)
         assert isinstance(result_dict, dict), \
             'the file was not correctly loaded'
