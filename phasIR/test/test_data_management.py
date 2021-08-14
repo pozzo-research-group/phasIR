@@ -52,21 +52,21 @@ class TestSimulationTools(unittest.TestCase):
 
         files = os.listdir(test_path)
         assert 'test_file.h5' in files, 'the file was not correctly saved'
+
+        os.remove(test_path + 'test_file.h5')
         return
 
-    def read_results(self):
+    def test_read_results(self):
         test_path = './phasIR/test/data/'
-        test_file = 'test_file.h5'
+        test_file = 'file_to_read.h5'
+        files = os.listdir(test_path)
         result_dict = dm.read_results(test_path, test_file)
         assert isinstance(result_dict, dict), \
             'the file was not correctly loaded'
 
         test_path = './phasIR/test/data/'
-        test_file = 'test_file'
+        test_file = 'file_to_read'
         result_dict = dm.read_results(test_path, test_file)
         assert isinstance(result_dict, dict), \
             'the file was not correctly loaded'
         return
-
-    test_path = './phasIR/test/data/'
-    os.remove(test_path + 'test_file.h5')

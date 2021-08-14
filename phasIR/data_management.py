@@ -45,7 +45,7 @@ def save_to_csv(dataframe, path, filename):
         Dataframe containing to be saved.
     '''
     dataframe.to_csv(path+filename)
-    return print('The data was correctly save as' +
+    return print('The data was correctly save as ' +
                  '\033[1m{}\033[0m '.format(filename) +
                  ' in the following folder \033[1m{}\033[0m'.format(path))
 
@@ -97,7 +97,7 @@ def save_results(sample_temp, plate_temp, path, filename, n_col, n_rows):
 
     result_file.close()
 
-    return print('The data was correctly save as' +
+    return print('The data was correctly save as ' +
                  '\033[1m{}\033[0m '.format(filename) +
                  ' in the following folder \033[1m{}\033[0m'.format(path))
 
