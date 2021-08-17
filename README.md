@@ -1,5 +1,8 @@
  [![Build Status](https://travis-ci.com/pozzo-research-group/phasIR.svg?branch=master)](https://travis-ci.com/pozzo-research-group/phasIR)
  [![Coverage Status](https://coveralls.io/repos/github/pozzo-research-group/phasIR/badge.svg?branch=master)](https://coveralls.io/github/pozzo-research-group/phasIR?branch=master)
+ [![Anaconda-Server Badge](https://anaconda.org/pozzorg/phasir/badges/platforms.svg)](https://anaconda.org/pozzorg/phasir)
+ [![Anaconda-Server Badge](https://anaconda.org/pozzorg/phasir/badges/installer/conda.svg)](https://conda.anaconda.org/pozzorg)
+ [![Anaconda-Server Badge](https://anaconda.org/pozzorg/phasir/badges/license.svg)](https://anaconda.org/pozzorg/phasir)
  
 <img src="./doc/images/PhasIR_Schematics.png" width="400" height="600" align='right' title="Generat PhasIR Schematics. The system is composed by a Raspberry Pi Interface, a Lepton FLIR 3.5 IR Camera and a Echotherm IC25 Chilling/Heating plate">
 
