@@ -1,0 +1,73 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  PhasIR: An Instrumentation and Analysis Software
+  for High-throughput Phase Transition Temperature
+  Measurements
+message: >-
+  If you use this software or hardware, please cite
+  it using the metadata from this file.
+type: software
+authors:
+  - given-names: Jaime
+    family-names: Rodriguez
+    affiliation: Pacific Northwest National Lab
+  - given-names: Maria
+    family-names: Politi
+    affiliation: University of Washington
+  - given-names: Sage
+    family-names: Scheiwiller
+    affiliation: University of Washington
+  - given-names: 'Shrilakshmi '
+    family-names: Bonageri
+    affiliation: Astrolabe Analytics
+  - given-names: Stuart
+    family-names: Adler
+    affiliation: University of Washington
+    email: stuadler@uw.edu
+  - given-names: David A. C.
+    family-names: Beck
+    email: dacb@uw.edu
+    affiliation: University of Washington
+    orcid: 'https://orcid.org/0000-0002-5371-7035'
+  - given-names: Lilo D.
+    family-names: Pozzo
+    email: jdpozzo@uw.edu
+    affiliation: University of Washington
+preferred-citation:
+  type: article
+  authors:
+  - given-names: Jaime
+    family-names: Rodriguez
+    affiliation: Pacific Northwest National Lab
+  - given-names: Maria
+    family-names: Politi
+    affiliation: University of Washington
+  - given-names: Sage
+    family-names: Scheiwiller
+    affiliation: University of Washington
+  - given-names: 'Shrilakshmi '
+    family-names: Bonageri
+    affiliation: Astrolabe Analytics
+  - given-names: Stuart
+    family-names: Adler
+    affiliation: University of Washington
+    email: stuadler@uw.edu
+  - given-names: David A. C.
+    family-names: Beck
+    email: dacb@uw.edu
+    affiliation: University of Washington
+    orcid: 'https://orcid.org/0000-0002-5371-7035'
+  - given-names: Lilo D.
+    family-names: Pozzo
+    email: jdpozzo@uw.edu
+    affiliation: University of Washington
+  doi: "10.5334/joh.39"
+  journal: "Journal of Open Hardware"
+  start: 6 # First page number
+  title: "PhasIR: An Instrumentation and Analysis Software for High-throughput Phase Transition Temperature Measurements"
+  issue: 1
+  volume: 5
+  year: 2021
