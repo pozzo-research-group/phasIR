@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below."
+title: "phasIR"
+type: software
+authors:
+  - name: "Pozzo Research Group, University of Washington"
+repository-code: "https://github.com/pozzo-research-group/phasIR"
+url: "https://pozzorg.com"
+preferred-citation:
+  type: article
+  title: "PhasIR: An Instrumentation and Analysis Software for High-throughput Phase Transition Temperature Measurements"
+  authors:
+    - family-names: "Rodriguez"
+      given-names: "Jaime"
+    - family-names: "Politi"
+      given-names: "Maria"
+    - family-names: "Scheiwiller"
+      given-names: "Sage"
+    - family-names: "Bonageri"
+      given-names: "Shrilakshmi"
+    - family-names: "Adler"
+      given-names: "Stuart"
+    - family-names: "Beck"
+      given-names: "David"
+    - family-names: "Pozzo"
+      given-names: "Lilo D."
+  journal: "Journal of Open Hardware"
+  year: 2021
+  volume: "5"
+  issue: "1"
+  doi: "10.5334/joh.39"
