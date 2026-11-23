@@ -3,7 +3,17 @@ message: "If you use this software, please cite the paper below."
 title: "phasIR"
 type: software
 authors:
-  - name: "Pozzo Research Group, University of Washington"
+  - family-names: "Politi"
+    given-names: "Maria"
+    orcid: "https://orcid.org/0000-0002-5815-3371"
+  - family-names: "Rodriguez"
+    given-names: "Jaime"
+  - family-names: "Scheiwiller"
+    given-names: "Sage C."
+    orcid: "https://orcid.org/0000-0003-2362-7933"
+  - family-names: "Pozzo"
+    given-names: "Lilo D."
+    orcid: "https://orcid.org/0000-0001-7104-9061"
 repository-code: "https://github.com/pozzo-research-group/phasIR"
 url: "https://pozzorg.com"
 preferred-citation:
