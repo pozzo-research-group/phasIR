@@ -1,5 +1,3 @@
- [![Build Status](https://travis-ci.com/pozzo-research-group/phasIR.svg?branch=master)](https://travis-ci.com/pozzo-research-group/phasIR)
- [![Coverage Status](https://coveralls.io/repos/github/pozzo-research-group/phasIR/badge.svg?branch=master)](https://coveralls.io/github/pozzo-research-group/phasIR?branch=master)
  [![Anaconda-Server Badge](https://anaconda.org/pozzorg/phasir/badges/platforms.svg)](https://anaconda.org/pozzorg/phasir)
  [![Anaconda-Server Badge](https://anaconda.org/pozzorg/phasir/badges/installer/conda.svg)](https://conda.anaconda.org/pozzorg)
  [![Anaconda-Server Badge](https://anaconda.org/pozzorg/phasir/badges/license.svg)](https://anaconda.org/pozzorg/phasir)
@@ -7,6 +5,23 @@
 <img src="./doc/images/PhasIR_Schematics.png" width="400" height="600" align='right' title="Generat PhasIR Schematics. The system is composed by a Raspberry Pi Interface, a Lepton FLIR 3.5 IR Camera and a Echotherm IC25 Chilling/Heating plate">
 
 # phasIR
+
+> **Paper:** Rodríguez, J., Politi, M., Scheiwiller, S. C., Bonageri, S., Adler, S. B., Beck, D., & Pozzo, L. D. (2021). PhasIR: An Instrumentation and Analysis Software for High-throughput Phase Transition Temperature Measurements. *Journal of Open Hardware*, 5(1). [https://doi.org/10.5334/joh.39](https://doi.org/10.5334/joh.39)
+
+## How to cite
+If you use phasIR (software or hardware), please cite the paper above:
+
+```bibtex
+@article{rodriguez2021phasir,
+  title   = {PhasIR: An Instrumentation and Analysis Software for High-throughput Phase Transition Temperature Measurements},
+  author  = {Rodr{\'i}guez, Jaime and Politi, Maria and Scheiwiller, Sage C. and Bonageri, Shrilakshmi and Adler, Stuart B. and Beck, David and Pozzo, Lilo D.},
+  journal = {Journal of Open Hardware},
+  volume  = {5},
+  number  = {1},
+  year    = {2021},
+  doi     = {10.5334/joh.39}
+}
+```
 
 
 Python modules for high-throughput thermal analysis for fast and accurate estimation of phase transition temperatures for up to 96-samples analyzed simultaneously in under 15 minutes. The package includes the data analysis software, as well as build files to reproduce the PhasIR hardware infrastructure.
