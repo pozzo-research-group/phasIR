@@ -1,6 +1,7 @@
  [![Anaconda-Server Badge](https://anaconda.org/pozzorg/phasir/badges/platforms.svg)](https://anaconda.org/pozzorg/phasir)
  [![Anaconda-Server Badge](https://anaconda.org/pozzorg/phasir/badges/installer/conda.svg)](https://conda.anaconda.org/pozzorg)
  [![Anaconda-Server Badge](https://anaconda.org/pozzorg/phasir/badges/license.svg)](https://anaconda.org/pozzorg/phasir)
+ [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24484810.svg)](https://doi.org/10.5281/zenodo.24484810)
  
 <img src="./doc/images/PhasIR_Schematics.png" width="400" height="600" align='right' title="Generat PhasIR Schematics. The system is composed by a Raspberry Pi Interface, a Lepton FLIR 3.5 IR Camera and a Echotherm IC25 Chilling/Heating plate">
 
